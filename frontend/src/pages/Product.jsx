@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
+import RelatedProducts from '../components/RelatedProducts';
 export default function Product() {
     const { productId } = useParams();
     const { products, currency } = useContext(ShopContext);
@@ -69,8 +70,8 @@ export default function Product() {
                     </div>
                 </div>
             </div>
-            {/*`````````````````````` PRODUCT INFORMATION`````````````````` */}
-
+            {/*`````````````````````` RELATED PRODUCT `````````````````` */}
+            <RelatedProducts category={productData.category} subCateory={productData.subCateory} />
         </div>
     ) : null;
 }
