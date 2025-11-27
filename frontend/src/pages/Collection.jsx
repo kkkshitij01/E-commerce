@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { ShopContext } from '../context/shopContext'
+import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/assets';
 import Title from "../components/Title"
 import ProductItem from "../components/ProductItem"
 
 export default function Collection() {
-    const { products } = useContext(ShopContext);
+    const { products, search, showSearch } = useContext(ShopContext);
     const [showFilter, setShowFilter] = useState(false)
     const [filterProducts, setFilterProducts] = useState([]);
     const [subCategory, setSubCategory] = useState([]);
     const [category, setCategory] = useState([]);
-    const [sortType, setSortType] = useState(['relevent']);
+    const [sortType, setSortType] = useState('relevent');
     const toggleCategory = (e) => {
         if (category.includes(e.target.value)) {
             setCategory(prev => prev.filter(item => item !== e.target.value))
@@ -28,6 +28,9 @@ export default function Collection() {
     }
     const applyFilter = () => {
         let productsCopy = products.slice();
+        if (showSearch && search) {
+            productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+        }
         if (category.length > 0) {
             productsCopy = productsCopy.filter(item => { return category.includes(item.category) })
         }
@@ -60,7 +63,7 @@ export default function Collection() {
 
     useEffect(() => {
         applyFilter();
-    }, [category, subCategory]);
+    }, [category, subCategory, search]);
     return (
         <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
             {/* Filter Options */}
