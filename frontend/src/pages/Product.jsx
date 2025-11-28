@@ -71,7 +71,7 @@ export default function Product() {
                 </div>
             </div>
             {/*`````````````````````` RELATED PRODUCT `````````````````` */}
-            <RelatedProducts category={productData.category} subCateory={productData.subCateory} />
+            <RelatedProducts category={productData.category} subCategory={productData.subCategory} currentProductId={productData._id} />
         </div>
     ) : null;
 }

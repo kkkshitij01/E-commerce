@@ -3,14 +3,14 @@ import { ShopContext } from '../context/ShopContext'
 import ProductItem from './ProductItem';
 import Title from "../components/Title"
 
-export default function RelatedProducts({ category, subCateory }) {
+export default function RelatedProducts({ category, subCategory, currentProductId }) {
     const { products } = useContext(ShopContext);
     const [related, setRelated] = useState([]);
     useEffect(() => {
         if (products.length > 0) {
             let productCopy = products.slice();
-            productCopy = productCopy.filter(product => product.category === category)
-            productCopy = productCopy.filter(product => product.subCateory === subCateory)
+            productCopy = productCopy.filter(product => product.category === category && product._id !== currentProductId)
+            productCopy = productCopy.filter(product => product.subCategory === subCategory)
             setRelated(productCopy.slice(0, 5));
         }
     }, [products]);
