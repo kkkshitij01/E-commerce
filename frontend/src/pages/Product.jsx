@@ -5,7 +5,7 @@ import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
 export default function Product() {
     const { productId } = useParams();
-    const { products, currency } = useContext(ShopContext);
+    const { products, currency, cartItems, addToCart } = useContext(ShopContext);
     const [productData, setProductData] = useState(null);
     const [focusImage, setFocusImage] = useState('');
     const [size, setSize] = useState('');
@@ -56,12 +56,12 @@ export default function Product() {
                         <div className="flex gap-2">
                             {
                                 productData.sizes.map((item, index) => (
-                                    <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-100 ${size === item ? "border-orange-600 bg-gray-400 text-white" : ""}`} key={index}>{item}</button>
+                                    <button onClick={() => setSize((prev) => prev == item ? '' : item)} className={`border py-2 px-4 bg-gray-100 ${size === item ? "border-orange-600 bg-gray-400 text-white" : ""}`} key={index}>{item}</button>
                                 ))
                             }
                         </div>
                     </div>
-                    <button className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>Add to Cart</button>
+                    <button onClick={() => { addToCart(productData._id, size) }} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>Add to Cart</button>
                     <hr className='mt-8 sm:w-4/5' />
                     <div className='text-sm text-gray-500 mt-5 flex flex-col gap-1'>
                         <p>100% Original Product.</p>

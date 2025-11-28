@@ -4,7 +4,7 @@ import { assets } from "../assets/assets"
 import { ShopContext } from "../context/ShopContext";
 
 export default function Navbar() {
-    const { setShowSearch } = useContext(ShopContext);
+    const { setShowSearch, getCartCount } = useContext(ShopContext);
     const [vissible, setVissible] = useState(false);
     return (
         <div className='flex items-center justify-between py-5 font-medium'>
@@ -34,7 +34,7 @@ export default function Navbar() {
                 <div className="group relative">
                     <img src={assets.profile_icon} alt="search-img" className="w-4 cursor-pointer" />
                     <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
-                        <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-stale-100 text-gray-500 rounded">
+                        <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-white shadow-lg text-gray-500 rounded border">
                             <p className="cursor-pointer hover:text-black">My Profile</p>
                             <p className="cursor-pointer hover:text-black">Orders</p>
                             <p className="cursor-pointer hover:text-black">Logout</p>
@@ -44,7 +44,7 @@ export default function Navbar() {
                 </div>
                 <Link to="/cart" className="relative">
                     <img src={assets.cart_icon} className="w-4 min-w-3" alt="cart-img" />
-                    <p className="cart-item-quantity">10</p>
+                    <p className="cart-item-quantity">{getCartCount()}</p>
                 </Link>
                 <img onClick={() => setVissible(true)} src={assets.menu_icon} alt="menu-icon" className="w-5 cursor-pointer sm:hidden" />
                 {/* Sidebar Menu for small screen */}
