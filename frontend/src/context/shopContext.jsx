@@ -11,6 +11,7 @@ export const ShopContextProvider = ({ children }) => {
     const delivery_fee = 80
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
+    //STORES EACH ITEM WITH SIZE AND QUANTITY
     const [cartItems, setCartItems] = useState({});
     const updateCartCount = () => {
 
@@ -33,6 +34,16 @@ export const ShopContextProvider = ({ children }) => {
         }
         setCartItems(cartData);
     }
+    //test cartItems
+    useEffect(() => {
+        console.log(cartItems)
+    }, [cartItems]);
+    //REMOVING PRODUCT FROM CART
+    const updateQuantity = (itemId, size, quantity) => {
+        let cartData = structuredClone(cartItems);
+        cartData[itemId][size] = quantity;
+        setCartItems(cartData);
+    }
     const getCartCount = () => {
         let totalCount = 0
         for (const items in cartItems) {
@@ -52,7 +63,7 @@ export const ShopContextProvider = ({ children }) => {
         delivery_fee, search,
         setSearch, showSearch,
         setShowSearch, cartItems,
-        addToCart, getCartCount
+        addToCart, getCartCount, updateQuantity
     }
     return (
         <ShopContext.Provider value={value}>

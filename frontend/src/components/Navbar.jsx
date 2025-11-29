@@ -44,7 +44,7 @@ export default function Navbar() {
                 </div>
                 <Link to="/cart" className="relative">
                     <img src={assets.cart_icon} className="w-4 min-w-3" alt="cart-img" />
-                    <p className="cart-item-quantity">{getCartCount()}</p>
+                    <p className={`cart-item-quantity ${getCartCount() == 0 ? "hidden" : ""}`}>{getCartCount()}</p>
                 </Link>
                 <img onClick={() => setVissible(true)} src={assets.menu_icon} alt="menu-icon" className="w-5 cursor-pointer sm:hidden" />
                 {/* Sidebar Menu for small screen */}
