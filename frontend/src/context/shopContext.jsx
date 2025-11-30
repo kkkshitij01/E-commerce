@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { createContext, useContext } from "react";
 import { products } from "../assets/assets.js"
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export const ShopContext = createContext();
@@ -8,7 +9,8 @@ export const ShopContext = createContext();
 export const ShopContextProvider = ({ children }) => {
 
     const currency = "₹"
-    const delivery_fee = 80
+    const delivery_fee = 60
+    const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     //STORES EACH ITEM WITH SIZE AND QUANTITY
@@ -34,10 +36,22 @@ export const ShopContextProvider = ({ children }) => {
         }
         setCartItems(cartData);
     }
-    //test cartItems
-    useEffect(() => {
-        console.log(cartItems)
-    }, [cartItems]);
+    const getCartAmount = () => {
+        let totalAmount = 0;
+        for (const items in cartItems) {
+            let itemInfo = products.find((product) => product._id == items)
+            for (const item in cartItems[items]) {
+                try {
+                    if (cartItems[items][item] > 0) {
+                        totalAmount += itemInfo.price * cartItems[items][item];
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+        return totalAmount;
+    }
     //REMOVING PRODUCT FROM CART
     const updateQuantity = (itemId, size, quantity) => {
         let cartData = structuredClone(cartItems);
@@ -63,7 +77,9 @@ export const ShopContextProvider = ({ children }) => {
         delivery_fee, search,
         setSearch, showSearch,
         setShowSearch, cartItems,
-        addToCart, getCartCount, updateQuantity
+        addToCart, getCartCount,
+        updateQuantity, getCartAmount,
+        navigate
     }
     return (
         <ShopContext.Provider value={value}>

@@ -7,6 +7,12 @@ a.active hr {
 ::-webkit-scrollbar {
   display: none;
 }
+.cart-item-grid {
+  @apply py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5] items-center gap-4;
+}
+.userData-input {
+  @apply border border-gray-300 rounded py-1.5 px-3.5 w-full;
+}
 .prata-regular {
   font-family: "Prata", serif;
   font-weight: 400;

@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import Title from '../components/Title';
 import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/assets';
+import CartTotal from '../components/CartTotal';
 
 export default function Cart() {
-    const { products, currency, cartItems, updateQuantity } = useContext(ShopContext)
+    const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext)
     const [cartData, setCartData] = useState([]);
     useEffect(() => {
         const tempData = [];
@@ -21,6 +22,9 @@ export default function Cart() {
         }
         setCartData(tempData);
     }, [cartItems])
+    useEffect(() => {
+        console.log(cartItems.length);
+    }, [])
     return (
         <div className='border-t pt-14'>
             <div className='text-2xl mb-3'>
@@ -31,7 +35,7 @@ export default function Cart() {
                     cartData.map((item, index) => {
                         const productData = products.find((product) => product._id === item._id);
                         return (
-                            <div key={index} className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5] items-center gap-4">
+                            <div key={index} className="cart-item-grid">
                                 <div className="flex items-start gap-6">
                                     <img className="w-16 sm:w-20" src={productData.image[0]} alt="product-img" />
                                     <div>
@@ -48,6 +52,15 @@ export default function Cart() {
                         )
                     })
                 }
+            </div>
+            <div className='flex justify-end my-20'>
+                <div className="w-full sm:w-[450px]">
+
+                    <CartTotal />
+                    <div className="w-full text-end">
+                        <button onClick={() => navigate("/place-order")} className='bg-black text-white my-8 text:sm py-3 px-8'>PROCEED TO CHECKOUT</button>
+                    </div>
+                </div>
             </div>
         </div>
     )
