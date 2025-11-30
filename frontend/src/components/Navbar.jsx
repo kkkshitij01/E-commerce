@@ -32,7 +32,7 @@ export default function Navbar() {
             <div className="flex items-center gap-6">
                 <img src={assets.search_icon} alt="search-img" className="w-4 cursor-pointer" onClick={() => setShowSearch(true)} />
                 <div className="group relative">
-                    <img src={assets.profile_icon} alt="search-img" className="w-4 cursor-pointer" />
+                    <Link to={"/login"}><img src={assets.profile_icon} alt="search-img" className="w-4 cursor-pointer" /></Link>
                     <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
                         <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-white shadow-lg text-gray-500 rounded border">
                             <p className="cursor-pointer hover:text-black">My Profile</p>
