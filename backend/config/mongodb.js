@@ -1,5 +1,9 @@
 import mongoose from "mongoose"
 
-export default connectToDb = async () => {
-    await mongoose.connect(`${process.env.MONGODB_URL}`)
+const connectDB = async () => {
+    mongoose.connection.on('connected', () => {
+        console.log("MONGODB CONNECTED");
+    });
+    await mongoose.connect(`${process.env.MONGODB_URL}/phoenix-ecom`)
 }
+export default connectDB;
