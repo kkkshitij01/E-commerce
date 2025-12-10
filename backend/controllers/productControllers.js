@@ -11,13 +11,11 @@ const addProduct = async (req, res) => {
       bestseller,
     } = req.body;
     // multer puts uploaded files on req.files, not req.fields
-    const image1 = req.files?.image1?.[0];
-    const image2 = req.files?.image2?.[0];
-    const image3 = req.files?.image3?.[0];
-    const image4 = req.files?.image4?.[0];
-    if (!image1 || !image2 || !image3 || !image4) {
-      throw new Error("Missing one or more images from upload");
-    }
+    const image1 = req.files.image1 && req.files.image1[0];
+    const image2 = req.files.image2 && req.files.image2[0];
+    const image3 = req.files.image3 && req.files.image3[0];
+    const image4 = req.files.image4 && req.files.image4[0];
+
     console.log(
       name,
       description,
