@@ -30,7 +30,11 @@ export default function Login() {
           password,
         });
         if (response.data.success) {
-          toast.success("Account Created");
+          if (currentState == "Sign Up") {
+            toast.success("Account Created");
+          } else {
+            toast.success("LogIn Successfull ");
+          }
           setToken(response.data.token);
           localStorage.setItem("token", response.data.token);
         } else {
@@ -43,7 +47,7 @@ export default function Login() {
     }
   };
   useEffect(() => {
-    if (toast) {
+    if (token) {
       navigate("/");
     }
   }, [token]);

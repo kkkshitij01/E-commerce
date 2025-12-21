@@ -87,6 +87,12 @@ export const ShopContextProvider = ({ children }) => {
   useEffect(() => {
     getProductsData();
   }, []);
+  useEffect(() => {
+    if (!token && localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
+
   const value = {
     products,
     currency,
@@ -103,6 +109,7 @@ export const ShopContextProvider = ({ children }) => {
     navigate,
     backendUrl,
     token,
+    setCartItems,
     setToken,
   };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

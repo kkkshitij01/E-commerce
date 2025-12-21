@@ -10,9 +10,7 @@ export default function Add({ token }) {
   const [image3, setImage3] = useState(false);
   const [image4, setImage4] = useState(false);
   const [name, setName] = useState("");
-  const [description, setDescription] = useState(
-    "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment."
-  );
+  const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Men");
   const [subCategory, setSubCategory] = useState("Topwear");
@@ -41,7 +39,7 @@ export default function Add({ token }) {
       if (response.data.success) {
         toast.success(response.data.message);
         setName("");
-        // setDescription("");
+        setDescription("");
         setImage1(false);
         setImage2(false);
         setImage3(false);

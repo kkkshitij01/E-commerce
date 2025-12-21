@@ -23,8 +23,8 @@ export const loginUser = async (req, res) => {
       return res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
-    console.log(e);
-    return res.json({ success: false, message: e.message });
+    console.log(error);
+    return res.json({ success: false, message: error.message });
   }
 };
 
