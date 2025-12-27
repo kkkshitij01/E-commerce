@@ -36,11 +36,7 @@ export const ShopContextProvider = ({ children }) => {
     }
     setCartItems(cartData);
     try {
-      await axios.post(
-        backendUrl + "/api/cart/add",
-        { itemId, size },
-        { headers: { token } }
-      );
+      await axios.post(backendUrl + "/api/cart/add", { itemId, size }, { headers: { token } });
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -52,28 +48,25 @@ export const ShopContextProvider = ({ children }) => {
       let itemInfo = products.find((product) => product._id == items);
       for (const item in cartItems[items]) {
         try {
-          if (cartItems[items][item] > 0) {
+          if (cartItems[items][item] > 0 && itemInfo) {
             totalAmount += itemInfo.price * cartItems[items][item];
           }
         } catch (e) {
+          toast.error(e.message);
           console.log(e);
         }
       }
     }
     return totalAmount;
   };
-  //REMOVING PRODUCT FROM CART
+
   const updateQuantity = async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
     cartData[itemId][size] = quantity;
     setCartItems(cartData);
     if (token) {
       try {
-        await axios.post(
-          backendUrl + "/api/cart/update",
-          { itemId, size, quantity },
-          { headers: { token } }
-        );
+        await axios.post(backendUrl + "/api/cart/update", { itemId, size, quantity }, { headers: { token } });
       } catch (error) {
         console.log(error);
         toast.error(error.message);
@@ -82,11 +75,7 @@ export const ShopContextProvider = ({ children }) => {
   };
   const getUserCart = async (token) => {
     try {
-      const response = await axios.post(
-        backendUrl + "/api/cart/get",
-        {},
-        { headers: { token } }
-      );
+      const response = await axios.post(backendUrl + "/api/cart/get", {}, { headers: { token } });
       if (response.data.success) {
         setCartItems(response.data.cartData);
       }
@@ -130,25 +119,6 @@ export const ShopContextProvider = ({ children }) => {
       getUserCart(localStorage.getItem("token"));
     }
   }, []);
-
-  const value = {
-    products,
-    currency,
-    delivery_fee,
-    search,
-    setSearch,
-    showSearch,
-    setShowSearch,
-    cartItems,
-    addToCart,
-    getCartCount,
-    updateQuantity,
-    getCartAmount,
-    navigate,
-    backendUrl,
-    token,
-    setCartItems,
-    setToken,
-  };
+  const value = { products, currency, delivery_fee, search, setSearch, showSearch, setShowSearch, cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, token, setCartItems, setToken };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
