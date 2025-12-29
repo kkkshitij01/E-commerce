@@ -58,6 +58,14 @@ export default function PlaceOrder() {
             toast.error(response.data.message);
           }
           break;
+        case "stripe":
+          const responseStripe = await axios.post(backendUrl + "/api/order/stripe", orderData, { headers: { token } });
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url);
+          } else {
+            toast.error(responseStripe.data.message);
+          }
 
         default:
           break;
@@ -76,20 +84,20 @@ export default function PlaceOrder() {
           <Title text1={"DELIVERY"} text2={"INFORMATION"} />
         </div>
         <div className="gap-3 flex">
-          <input onChange={onChangeHandler} name="firstName" value={formData.firstName} className="userData-input " type="text" placeholder="First Name" />
-          <input onChange={onChangeHandler} name="lastName" value={formData.lastName} className="userData-input " type="text" placeholder="Last Name" />
+          <input onChange={onChangeHandler} name="firstName" required value={formData.firstName} className="userData-input " type="text" placeholder="First Name" />
+          <input onChange={onChangeHandler} name="lastName" required value={formData.lastName} className="userData-input " type="text" placeholder="Last Name" />
         </div>
-        <input onChange={onChangeHandler} value={formData.email} name="email" className="userData-input " type="email" placeholder="Email Address" />
-        <input onChange={onChangeHandler} name="street" value={formData.street} className="userData-input " type="text" placeholder="Street" />
+        <input onChange={onChangeHandler} value={formData.email} required name="email" className="userData-input " type="email" placeholder="Email Address" />
+        <input required onChange={onChangeHandler} name="street" value={formData.street} className="userData-input " type="text" placeholder="Street" />
         <div className="gap-3 flex">
-          <input onChange={onChangeHandler} name="city" value={formData.city} className="userData-input " type="text" placeholder="City" />
-          <input onChange={onChangeHandler} name="state" value={formData.state} className="userData-input " type="text" placeholder="State" />
+          <input onChange={onChangeHandler} name="city" required value={formData.city} className="userData-input " type="text" placeholder="City" />
+          <input onChange={onChangeHandler} name="state" required value={formData.state} className="userData-input " type="text" placeholder="State" />
         </div>
         <div className="gap-3 flex">
-          <input onChange={onChangeHandler} value={formData.zipcode} name="zipcode" className="userData-input " type="number" placeholder="Zipcode" />
-          <input onChange={onChangeHandler} name="country" value={formData.country} className="userData-input " type="text" placeholder="Country" />
+          <input required onChange={onChangeHandler} value={formData.zipcode} name="zipcode" className="userData-input " type="number" placeholder="Zipcode" />
+          <input required onChange={onChangeHandler} name="country" value={formData.country} className="userData-input " type="text" placeholder="Country" />
         </div>
-        <input onChange={onChangeHandler} value={formData.phone} name="phone" className="userData-input " type="number" placeholder="Phone Number" />
+        <input required onChange={onChangeHandler} value={formData.phone} name="phone" className="userData-input " type="number" placeholder="Phone Number" />
       </div>
       {/*__________________ RIGHT SIDE______________ */}
       <div className="mt-8">
@@ -100,31 +108,31 @@ export default function PlaceOrder() {
           <Title text1={"PAYMENT"} text2={"METHOD"} />
           {/*__________________ PAYMENT METHOD SELECTION______________ */}
           <div className="flex gap-3 flex-col lg:flex-row">
-            <div className="flex items-center border p-2 px-3 cursor-pointer">
-              <p
-                onClick={() => {
-                  setMethod("stripe");
-                }}
-                className={`min-w-3 h-3 border rounded-full ${method === "stripe" ? "bg-green-300" : ""}`}
-              ></p>
+            <div
+              onClick={() => {
+                setMethod("stripe");
+              }}
+              className="flex items-center border p-2 px-3 cursor-pointer"
+            >
+              <p className={`min-w-3 h-3 border rounded-full ${method === "stripe" ? "bg-green-300" : ""}`}></p>
               <img src={assets.stripe_logo} alt="stripe-logo" className="h-5 mx-4" />
             </div>
-            <div className="flex items-center border p-2 px-3 cursor-pointer">
-              <p
-                onClick={() => {
-                  setMethod("razorpay");
-                }}
-                className={`min-w-3 h-3 border rounded-full ${method === "razorpay" ? "bg-green-300" : ""}`}
-              ></p>
+            <div
+              onClick={() => {
+                setMethod("razorpay");
+              }}
+              className="flex items-center border p-2 px-3 cursor-pointer"
+            >
+              <p className={`min-w-3 h-3 border rounded-full ${method === "razorpay" ? "bg-green-300" : ""}`}></p>
               <img src={assets.razorpay_logo} alt="razorpay-logo" className="h-5 mx-4" />
             </div>
-            <div className="flex items-center gap-3 border p-2 px-3 cursor-pointer">
-              <p
-                onClick={() => {
-                  setMethod("cod");
-                }}
-                className={`min-w-3 h-3 border rounded-full ${method === "cod" ? "bg-green-300" : ""}`}
-              ></p>
+            <div
+              onClick={() => {
+                setMethod("cod");
+              }}
+              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+            >
+              <p className={`min-w-3 h-3 border rounded-full ${method === "cod" ? "bg-green-300" : ""}`}></p>
               <p className="text-gray-500 text-sm font-medium mx-4">CASH ON DELIVERY</p>
             </div>
           </div>

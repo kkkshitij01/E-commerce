@@ -37,7 +37,7 @@ const placeOrderStripe = async (req, res) => {
         product_data: {
           name: item.name,
         },
-        unit_amount: item.price * 100,
+        unit_amount: Math.round(item.price * 100),
       },
       quantity: item.quantity,
     }));
@@ -53,12 +53,28 @@ const placeOrderStripe = async (req, res) => {
     });
     const session = await stripe.checkout.sessions.create({
       success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
-      cancle_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
+      cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
       line_items,
       mode: "payment",
     });
     res.json({ success: true, session_url: session.url });
-    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+// verify stripe payment
+const verifyStripe = async (req, res) => {
+  const { orderId, success, userId } = req.body;
+  try {
+    if (success === "true") {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      await userModel.findByIdAndUpdate(userId, { cartData: {} });
+      res.json({ success: true });
+    } else {
+      await orderModel.findByIdAndDelete(orderId);
+      res.json({ success: false });
+    }
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -102,4 +118,4 @@ const updateStatus = async (req, res) => {
   }
 };
 
-export { userOrders, placeOrder, placeOrderRazorpay, placeOrderStripe, updateStatus, allOrder };
+export { userOrders, placeOrder, verifyStripe, placeOrderRazorpay, placeOrderStripe, updateStatus, allOrder };
