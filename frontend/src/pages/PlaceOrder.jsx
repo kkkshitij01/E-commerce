@@ -62,7 +62,10 @@ export default function PlaceOrder() {
         default:
           break;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message);
+    }
   };
 
   return (
