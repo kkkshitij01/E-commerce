@@ -66,7 +66,6 @@ export default function PlaceOrder() {
           } else {
             toast.error(responseStripe.data.message);
           }
-
         default:
           break;
       }
@@ -118,8 +117,9 @@ export default function PlaceOrder() {
               <img src={assets.stripe_logo} alt="stripe-logo" className="h-5 mx-4" />
             </div>
             <div
+            aria-disabled
               onClick={() => {
-                setMethod("razorpay");
+                toast.info("Not available");
               }}
               className="flex items-center border p-2 px-3 cursor-pointer"
             >
