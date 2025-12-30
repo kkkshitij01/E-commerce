@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ProductItem from "../components/ProductItem.jsx";
 import Title from "../components/Title.jsx";
-import { ShopContext } from "../context/shopContext";
+import { ShopContext } from "../context/ShopContext.jsx";
 export default function LatestCollection() {
   const { products } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]);
