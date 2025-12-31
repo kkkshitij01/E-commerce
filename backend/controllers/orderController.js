@@ -6,7 +6,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const currency = "inr";
-const deliveryCharge = 10;
+const deliveryCharge = 60;
 
 // Placing order using COD METHOD
 const placeOrder = async (req, res) => {
