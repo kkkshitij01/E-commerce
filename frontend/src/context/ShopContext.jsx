@@ -10,6 +10,7 @@ export const ShopContextProvider = ({ children }) => {
   const currency = "₹";
   const delivery_fee = 60;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const adminUrl = import.meta.env.VITE_ADMIN_URL;
   const navigate = useNavigate();
   const [token, setToken] = useState("");
   const [products, setProducts] = useState([]);
@@ -17,7 +18,7 @@ export const ShopContextProvider = ({ children }) => {
   const [showSearch, setShowSearch] = useState(false);
   //STORES EACH ITEM WITH SIZE AND QUANTITY
   const [cartItems, setCartItems] = useState({});
-  const updateCartCount = () => {};
+  const updateCartCount = () => { };
   const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Select product size");
@@ -92,7 +93,7 @@ export const ShopContextProvider = ({ children }) => {
           if (cartItems[items][item]) {
             totalCount += cartItems[items][item];
           }
-        } catch (e) {}
+        } catch (e) { }
       }
     }
     return totalCount;
@@ -119,6 +120,6 @@ export const ShopContextProvider = ({ children }) => {
       getUserCart(localStorage.getItem("token"));
     }
   }, []);
-  const value = { products, currency, delivery_fee, search, setSearch, showSearch, setShowSearch, cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, token, setCartItems, setToken };
+  const value = { products, currency, delivery_fee, search, setSearch, showSearch, setShowSearch, cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, token, setCartItems, setToken, adminUrl };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
