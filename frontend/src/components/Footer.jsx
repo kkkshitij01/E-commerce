@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
-import { ShopContext } from "../context/shopContext";
+import { ShopContext } from "../context/ShopContext";
 import { Link } from 'react-router-dom'
 
 export default function Footer() {
